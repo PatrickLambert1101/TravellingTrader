@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Title from './styles/Title';
+import DeleteItem from './DeleteItem';
+import AddToCart from './AddToCart';
 import ItemStyles from './styles/ItemStyles';
 import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/formatMoney';
+import { Mutation } from 'react-apollo';
 
 export default class Item extends Component {
   static propTypes = {
-    item: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired
   };
 
   render() {
@@ -16,12 +19,11 @@ export default class Item extends Component {
     return (
       <ItemStyles>
         {item.image && <img src={item.image} alt={item.title} />}
-
         <Title>
           <Link
             href={{
               pathname: '/item',
-              query: { id: item.id },
+              query: { id: item.id }
             }}
           >
             <a>{item.title}</a>
@@ -34,13 +36,13 @@ export default class Item extends Component {
           <Link
             href={{
               pathname: 'update',
-              query: { id: item.id },
+              query: { id: item.id }
             }}
           >
             <a>Edit ✏️</a>
           </Link>
-          <button>Add To Cart</button>
-          <button>Delete </button>
+          <AddToCart id={item.id} />
+          <DeleteItem id={item.id}>Delete this Item</DeleteItem>
         </div>
       </ItemStyles>
     );

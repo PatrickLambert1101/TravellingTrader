@@ -4,20 +4,22 @@ import gql from 'graphql-tag';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
+import Router from 'next/router';
+
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
     $title: String!
     $description: String!
-    $image: String
-    $largeItem: String
     $price: Int!
+    $image: String
+    $largeImage: String
   ) {
     createItem(
       title: $title
       description: $description
-      image: $image
-      largeItem: $largeItem
       price: $price
+      image: $image
+      largeImage: $largeImage
     ) {
       id
     }
@@ -26,11 +28,11 @@ const CREATE_ITEM_MUTATION = gql`
 
 export default class CreateItem extends Component {
   state = {
-    title: 'sdfsdfsdf',
-    description: 'dddd',
-    image: 'ddd',
-    largeItem: 'asdfasdf',
-    price: 1110
+    title: 'asdf',
+    description: 'asdf',
+    price: 10,
+    image: '',
+    largeImage: ''
   };
 
   handleChange = e => {
@@ -41,19 +43,65 @@ export default class CreateItem extends Component {
       [name]: val
     });
   };
+
+  uploadFile = async e => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'travellingtrader');
+    console.log('TCL: CreateItem -> data', data);
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/dnfyydyep/image/upload',
+      {
+        method: 'POST',
+        body: data
+      }
+    );
+    const file = await res.json();
+    console.log(file);
+    this.setState({
+      image: file.secure_url,
+      largeImage: file.eager[0].secure_url
+    });
+  };
+
   render() {
     return (
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error }) => (
           <Form
             onSubmit={async e => {
+              // Stop the form from submitting
               e.preventDefault();
+              // call the mutation
               const res = await createItem();
-              console.log('TCL: CreateItem -> render -> res', res);
+              // change to single item page
+              Router.push({
+                pathname: '/item',
+                query: { id: res.data.createItem.id }
+              });
             }}
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <label htmlFor="file">
+                Image
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  placeholder="Upload an image"
+                  required
+                  onChange={this.uploadFile}
+                />
+                {this.state.image && (
+                  <img
+                    width="200"
+                    src={this.state.image}
+                    alt={this.state.image}
+                  />
+                )}
+              </label>
               <label htmlFor="title">
                 Title
                 <input
