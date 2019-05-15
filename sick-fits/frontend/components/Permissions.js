@@ -2,7 +2,7 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from './ErrorMessage';
 import Table from './styles/Table';
-import SickButton from './styles/SickButton';
+import CTAButton from './styles/CTAButton';
 import PropTypes from 'prop-types';
 
 const possiblePermissions = [
@@ -129,9 +129,9 @@ class UserPermissions extends React.Component {
                 </td>
               ))}
               <td>
-                <SickButton disabled={loading} onClick={updatePermissions}>
+                <CTAButton disabled={loading} onClick={updatePermissions}>
                   Updat{loading ? 'ing' : 'e'}
-                </SickButton>
+                </CTAButton>
               </td>
             </tr>
           </>

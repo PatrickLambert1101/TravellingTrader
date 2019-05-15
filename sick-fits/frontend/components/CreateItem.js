@@ -71,11 +71,8 @@ export default class CreateItem extends Component {
         {(createItem, { loading, error }) => (
           <Form
             onSubmit={async e => {
-              // Stop the form from submitting
               e.preventDefault();
-              // call the mutation
               const res = await createItem();
-              // change to single item page
               Router.push({
                 pathname: '/item',
                 query: { id: res.data.createItem.id }

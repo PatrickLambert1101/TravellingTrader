@@ -237,6 +237,25 @@ const Mutations = {
       },
       info
     );
+  },
+
+  async removeFromCart(parent, args, ctx, info) {
+    // // find the cart item
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: { id: args.id }
+      },
+      `{id, user { id }}`
+    );
+    if (!cartItem) throw new Error('no cart item');
+    console.log('TCL: removeFromCart -> cartItem', cartItem);
+    // make sure they own the cart item
+    if (cartItem.user.id !== ctx.request.userId) {
+      throw new Error('cheaten huh?');
+    }
+    // delete the cart item
+
+    return ctx.db.mutation.deleteCartItem({ where: { id: args.id } }, info);
   }
 };
 

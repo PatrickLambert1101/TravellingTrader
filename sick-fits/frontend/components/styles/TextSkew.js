@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Supreme = styled.h3`
+const TextSkew = styled.h3`
   background: ${props => props.theme.red};
   color: white;
   display: inline-block;
@@ -10,4 +10,4 @@ const Supreme = styled.h3`
   font-size: 4rem;
 `;
 
-export default Supreme;
+export default TextSkew;
