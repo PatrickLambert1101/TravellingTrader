@@ -7,7 +7,6 @@ import AddToCart from './AddToCart';
 import ItemStyles from './styles/ItemStyles';
 import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/formatMoney';
-import { Mutation } from 'react-apollo';
 
 export default class Item extends Component {
   static propTypes = {

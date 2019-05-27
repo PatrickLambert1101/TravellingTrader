@@ -28,9 +28,9 @@ const CREATE_ITEM_MUTATION = gql`
 
 export default class CreateItem extends Component {
   state = {
-    title: 'asdf',
-    description: 'asdf',
-    price: 10,
+    title: '',
+    description: '',
+    price: '',
     image: '',
     largeImage: ''
   };
@@ -49,7 +49,6 @@ export default class CreateItem extends Component {
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'travellingtrader');
-    console.log('TCL: CreateItem -> data', data);
     const res = await fetch(
       'https://api.cloudinary.com/v1_1/dnfyydyep/image/upload',
       {
@@ -58,7 +57,6 @@ export default class CreateItem extends Component {
       }
     );
     const file = await res.json();
-    console.log(file);
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url
@@ -70,6 +68,7 @@ export default class CreateItem extends Component {
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error }) => (
           <Form
+            data-test="form"
             onSubmit={async e => {
               e.preventDefault();
               const res = await createItem();

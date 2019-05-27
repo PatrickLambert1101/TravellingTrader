@@ -3,6 +3,8 @@
     "titleBar.activeForeground": "#000",
     "titleBar.inactiveForeground": "#000000CC",
     "titleBar.activeBackground": "#FFC600",
-    "titleBar.inactiveBackground": "#FFC600CC"
-  }
+    "titleBar.inactiveBackground": "#FFC600CC",
+    "terminalCursor.foreground": "#00ffaa"
+  },
+  "terminal.integrated.cursorBlinking": true
 }

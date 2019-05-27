@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Mutation, Query } from 'react-apollo';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from './ErrorMessage';
 import styled from 'styled-components';
@@ -61,3 +61,4 @@ export default class SingleItem extends Component {
     );
   }
 }
+export { SINGLE_ITEM_QUERY };

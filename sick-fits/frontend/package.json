@@ -1,7 +1,7 @@
 {
   "name": "travelling-trader-frontend",
   "version": "1.0.0",
-  "description": "Travelling Trader multi vendor website",
+  "description": "Travelling Trader multi vendor websitenp",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 7777",
